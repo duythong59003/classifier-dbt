@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: tfidf_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${postgreUsername}
+      POSTGRES_PASSWORD: ${postgrePassword}
+      POSTGRES_DB: news
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  api:
+    build: ./api
+    container_name: tfidf_api
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${postgreUsername}:${postgrePassword}@db:5432/news
+
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.7.latest
+    container_name: tfidf_dbt
+    depends_on:
+      - db
+    volumes:
+      - ./db/SumAI:/usr/app
+      - ./db/SumAI/profiles.yml:/root/.dbt/profiles.yml
+    working_dir: /usr/app
+    environment:
+      - DBT_PROFILES_DIR=/root/.dbt
+      - postgreUsername=${postgreUsername}
+      - postgrePassword=${postgrePassword}

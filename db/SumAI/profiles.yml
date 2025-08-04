@@ -1,0 +1,22 @@
+SumAI:
+  outputs:
+    dev:
+      dbname: news
+      host: db
+      pass: "{{ env_var('postgrePassword') }}"
+      port: 5432
+      schema: public
+      threads: 1
+      type: postgres
+      user: "{{ env_var('postgreUsername') }}"
+  target: dev
+medallion_dbt_spark:
+  outputs:
+    dev:
+      host: adb-7070028759054415.15.azuredatabricks.net
+      http_path: sql/protocolv1/o/7070028759054415/0308-012229-cpdqj8ws
+      schema: saleslt
+      threads: 1
+      token: dapie66d6029a0bbb2426229bcab1ca67c62
+      type: databricks
+  target: dev
