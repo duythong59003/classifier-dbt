@@ -1,11 +1,13 @@
 CREATE TABLE documents (
   id SERIAL PRIMARY KEY,
-  title TEXT,
-  content TEXT
+  data TEXT,
+  labels TEXT
 );
 
-CREATE TABLE tfidf (
-  doc_id INT,
-  term TEXT,
-  tfidf_score FLOAT
+CREATE TABLE predictions (
+    id SERIAL PRIMARY KEY,
+    input_text TEXT NOT NULL,
+    predicted_label VARCHAR(100) NOT NULL,
+    confidence_score FLOAT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
