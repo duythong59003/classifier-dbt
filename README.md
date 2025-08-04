@@ -1,4 +1,4 @@
-# SumAI
+# Classifier-dbt
 
 A containerized NLP pipeline that preprocesses text, computes TF-IDF vectors, stores them in PostgreSQL, and serves classifications via a FastAPI. The project leverages dbt for data transformation and is managed with Docker Compose for easy deployment.
 
